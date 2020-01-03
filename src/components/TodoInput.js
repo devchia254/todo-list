@@ -2,6 +2,8 @@ import React, { Component } from "react";
 
 export default class TodoInput extends Component {
   render() {
+    const { item, handleChange } = this.props;
+
     return (
       <div className="card card-body my-3">
         <form>
@@ -15,6 +17,8 @@ export default class TodoInput extends Component {
               type="text"
               className="form-control text-capitalize"
               placeholder="Add a Todo Item"
+              value={item}
+              onChange={handleChange}
             />
           </div>
           <button
