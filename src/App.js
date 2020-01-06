@@ -3,19 +3,43 @@ import TodoInput from "./components/TodoInput";
 import TodoList from "./components/TodoList";
 
 import "bootstrap/dist/css/bootstrap.min.css";
-import uuid from "uuid";
+import uuid from "uuid"; // this just creates a random unique id, initiated by a function
 import "./App.css";
 
 class App extends Component {
   state = {
     items: [],
-    id: 0,
+    id: uuid(),
     item: "",
     editItem: false
   };
 
   handleChange = e => {
     this.setState({ item: e.target.value });
+  };
+
+  handleSubmit = e => {
+    e.preventDefault(); // prevent refresh page when submitting
+
+    const newItem = {
+      id: this.state.id,
+      title: this.state.item
+    };
+
+    const updatedItems = [...this.state.items, newItem]; // updates the state from a new array instead of the state itself (since immutable)
+
+    this.setState({
+      items: updatedItems,
+      item: "",
+      id: uuid(),
+      editItem: false
+    });
+
+    // console.log(newItem);
+  };
+
+  clearList = () => {
+    this.setState({ items: [] });
   };
 
   render() {
@@ -27,8 +51,9 @@ class App extends Component {
             <TodoInput
               item={this.state.item}
               handleChange={this.handleChange}
+              handleSubmit={this.handleSubmit}
             />
-            <TodoList />
+            <TodoList items={this.state.items} clearList={this.clearList} />
           </div>
         </div>
       </div>
