@@ -42,6 +42,15 @@ class App extends Component {
     this.setState({ items: [] });
   };
 
+  // This function behaves by prop drilling (not advisable). Redux & Context API prevents this
+  handleDelete = id => {
+    //Match the items id with the items id from the state
+    const filteredItems = this.state.items.filter(item => item.id !== id);
+    this.setState({ items: filteredItems });
+  };
+
+  handleEdit = id => {};
+
   render() {
     return (
       <div className="container">
@@ -53,7 +62,12 @@ class App extends Component {
               handleChange={this.handleChange}
               handleSubmit={this.handleSubmit}
             />
-            <TodoList items={this.state.items} clearList={this.clearList} />
+            <TodoList
+              items={this.state.items}
+              clearList={this.clearList}
+              handleDelete={this.handleDelete}
+              handleEdit={this.handleEdit}
+            />
           </div>
         </div>
       </div>
